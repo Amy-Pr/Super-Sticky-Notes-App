@@ -2,14 +2,14 @@ import React from "react";
 import Note from "./Note.js";
 
 //Added props as a parameter and made it a function with the bracket.
-const NoteList = (props) => {
+const NoteList = ({onType, removeNote, notesProps}) => {
   //renderNote is a callback function. "noteObj" refers to each object in the array "notes." We assigned "key" and "note" attributes in the component. Can call these anything, but need to match the prop passed from the Note component for it to work.
   const renderNote = (noteObj) => (
     <Note
       note={noteObj}
       key={noteObj.id}
-      onType={props.onType}
-      removeNote={props.removeNote}
+      onType={onType}
+      removeNote={removeNote}
     />
   );
 
@@ -18,7 +18,7 @@ const NoteList = (props) => {
   //We got this: const noteElements = props.notesProps.map(renderNote);
 
   //Now we are writing a function to filter the notes array to just include search matches (doesMatchSearch) that are true and saving it to a new array.
-  const searchMatches = props.notesProps.filter(
+  const searchMatches = notesProps.filter(
     (noteObj) => noteObj.doesMatchSearch
   );
   //now rewrite our noteElements array to map over searchMatches instead.
