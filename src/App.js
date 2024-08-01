@@ -1,9 +1,11 @@
-import React, { Component } from "react";
+// import React, { Component } from "react";
+import { useState } from "react";
 import Header from "./Header.js";
 import NoteList from "./NoteList.js";
 
-class App extends Component {
-  state = {
+const App = () => {
+  
+  const [state, setState] = useState({
     notes: [
       {
         id: Date.now(),
@@ -11,44 +13,26 @@ class App extends Component {
         description: "",
         doesMatchSearch: true
       }
-      //This data was only for my static model. Replaced by blank note object above.
-      //{
-      //id: 0,
-      //title: "eat",
-      // description: "reese peanut butter cups",
-      //doesMatchSearch: true
-      //},
-      //{
-      //id: 1,
-      // title: "sleep",
-      //description: "eight hours",
-      // doesMatchSearch: true
-      // },
-      // {
-      // id: 2,
-      // title: "code",
-      // description: "build an awesome ui",
-      // doesMatchSearch: true
-      // }
     ],
     searchText: ""
-  };
+  });
+  
 
-  componentDidMount() {
+  const componentDidMount = () => {
     const savedNotesString = localStorage.getItem("savedNotes");
     if (savedNotesString) {
       const savedNotes = JSON.parse(savedNotesString);
       //console.log(savedNotes);
-      this.setState({ notes: savedNotes });
+      setState({ notes: savedNotes });
     }
-  }
+  };
 
-  componentDidUpdate() {
+  const componentDidUpdate = () => {
     const savedNotesString = JSON.stringify(this.state.notes);
     localStorage.setItem("savedNotes", savedNotesString);
-  }
+  };
 
-  addNote = () => {
+ const addNote = () => {
     const newNote = {
       id: Date.now(),
       title: "",
@@ -56,15 +40,15 @@ class App extends Component {
       doesMatchSearch: true
     };
 
-    const newNoteArray = [newNote, ...this.state.notes];
-    this.setState({ notes: newNoteArray });
+    const newNoteArray = [newNote, ...state.notes];
+    setState({ notes: newNoteArray });
     console.log(newNoteArray);
   };
 
-  removeNote = (clickedNote) => {
+  const removeNote = (clickedNote) => {
     const filterCallback = (note) => note.id !== clickedNote; //Remember no brackets in ES6 for 1 expression function
-    const updatedNotes = this.state.notes.filter(filterCallback);
-    this.setState({ notes: updatedNotes });
+    const updatedNotes = state.notes.filter(filterCallback);
+    setState({ notes: updatedNotes });
   };
 
   //If I wrote the callback in ES5:
@@ -72,7 +56,7 @@ class App extends Component {
   //return note.id !== clickedNote;
   //};
 
-  onType = (editMeId, updatedKey, updatedValue) => {
+  const onType = (editMeId, updatedKey, updatedValue) => {
     /* this event handler updates sticky note text fields
       - editMeId: the id of the note that the user typed in
       - updatedKey: which field was edited? 'title' or 'description'
@@ -95,11 +79,11 @@ class App extends Component {
         }
       }
     };
-    const updatedNotes = this.state.notes.map(updateIdMatch); //for each object of notes array, run it through the updateIdMatch function, and build a new array made up of the return values of that function
-    this.setState({ notes: updatedNotes });
+    const updatedNotes = state.notes.map(updateIdMatch); //for each object of notes array, run it through the updateIdMatch function, and build a new array made up of the return values of that function
+    setState({ notes: updatedNotes });
   };
 
-  onSearch = (e) => {
+  const onSearch = (e) => {
     /* toggle the doesMatchSearch boolean value of each sticky
     note when the user types in the search field.
     set the doesMatchSearch value to true for a sticky note if
@@ -128,32 +112,32 @@ class App extends Component {
         return note;
       }
     };
-    const updatedNotes = this.state.notes.map(matchSearch);
-    this.setState({
+    const updatedNotes = state.notes.map(matchSearch);
+    setState({
       searchText: searchText, //setting this to the variable above (e.target.value) which corresponds to the value in the input element in Header.
       notes: updatedNotes
     });
   };
 
-  render() {
+  // render() {
     return (
       <div>
         {/*The addNoteProps attribute is important for the new note to render into JSX*/}
         <Header
-          searchTextProps={this.state.searchText}
-          addNoteProps={this.addNote}
-          onSearchProps={this.onSearch}
+          searchTextProps={state.searchText}
+          addNoteProps={addNote}
+          onSearchProps={onSearch}
         />
 
         {/*The ontType prop is being passed from the update functions in Note Component*/}
         <NoteList
-          notesProps={this.state.notes}
-          onType={this.onType}
-          removeNote={this.removeNote}
+          notesProps={state.notes}
+          onType={onType}
+          removeNote={removeNote}
         />
       </div>
     );
-  }
+  // }
 }
 
 export default App;
