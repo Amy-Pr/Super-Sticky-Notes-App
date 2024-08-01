@@ -20,7 +20,7 @@ const Note = ({note, onType, removeNote}) => {
   return (
     <li className="note">
       <input
-        value={note.title} //The "note" prop will be passed over to <Note /> in NoteList.js which sets note={noteObj}; Alternative: could also pass as "props.title" and set title={noteObj.title} in <Note />.
+        value={note.title} 
         type="text"
         className="note__title"
         placeholder="Title"
