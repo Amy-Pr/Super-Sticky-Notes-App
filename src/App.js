@@ -1,5 +1,4 @@
-// import React, { Component } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./Header.js";
 import NoteList from "./NoteList.js";
 
@@ -18,19 +17,32 @@ const App = () => {
   });
   
 
-  const componentDidMount = () => {
+  useEffect(()=> {
     const savedNotesString = localStorage.getItem("savedNotes");
     if (savedNotesString) {
       const savedNotes = JSON.parse(savedNotesString);
-      //console.log(savedNotes);
+      console.log(savedNotes);
       setState({ notes: savedNotes });
     }
-  };
+  }, [])
+  // const componentDidMount = () => {
+  //   const savedNotesString = localStorage.getItem("savedNotes");
+  //   if (savedNotesString) {
+  //     const savedNotes = JSON.parse(savedNotesString);
+  //     //console.log(savedNotes);
+  //     setState({ notes: savedNotes });
+  //   }
+  // };
 
-  const componentDidUpdate = () => {
-    const savedNotesString = JSON.stringify(this.state.notes);
+  useEffect(() => {
+    const savedNotesString = JSON.stringify(state.notes);
     localStorage.setItem("savedNotes", savedNotesString);
-  };
+    //console.log(localStorage);
+  }, [state.notes]);
+  // const componentDidUpdate = () => {
+  //   const savedNotesString = JSON.stringify(this.state.notes);
+  //   localStorage.setItem("savedNotes", savedNotesString);
+  // };
 
  const addNote = () => {
     const newNote = {
