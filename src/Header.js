@@ -11,7 +11,7 @@ const Header = ({addNoteProps, searchTextProps, onSearchProps}) => (
         type=""
         className="search"
         placeholder="Type here to search..."
-        value={searchTextProps}
+        value={searchTextProps || ""}
         onChange={onSearchProps}
       />
     </aside>
