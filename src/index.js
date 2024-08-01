@@ -6,3 +6,5 @@ import "./index.css";
 ReactDOM.createRoot(document.getElementById('root')).render(
       <App />
   )
+
+  //Note: cannot save and retrieve from local drive with StrictMode
