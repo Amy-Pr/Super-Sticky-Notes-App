@@ -9,5 +9,4 @@ Deployed with Netlify -- live link: https://superstickynotes-app.netlify.app/
 <li>HTML/CSS</li>
 <li>Javascript/JSX</li>
 <li>React</li>
-<li>CodeSandbox</li>
 </ul>
